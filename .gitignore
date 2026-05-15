@@ -1,0 +1,9 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Flask session data
+flask_session/
+
+# Mac system files (just in case)
+.DS_Store

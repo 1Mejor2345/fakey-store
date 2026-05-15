@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Add Funds
+{% endblock %}
+
+{% block body %}
+    <h2 class="mb-4">{{ username }}'s current cash</h2>
+    <div class="p-4 bg-light shadow-sm border mx-auto mb-5" style="max-width: 600px;">
+
+            <div class="mb-3">
+                <h4 class="mb-0">Current Cash: <span class="text-success fw-bold">${{ "%.2f"|format(cash) }}</span></h4>
+            </div>
+
+            <form action="/add" method="post" class="text-start">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input class="form-control form-control-md text-center" name="quantity" id="quantity" type="number" min="0.01" step="0.01" value="1.00" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-warning btn-md fw-bold w-100" type="submit">Add Funds</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+{% endblock %}

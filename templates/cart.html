@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Cart
+{% endblock %}
+
+{% block body %}
+    <h2 class="mb-4">Your Shopping Cart</h2>
+
+    {% if cart|length == 0 %}
+        <div class="text-center mt-5">
+            <h4 class="text-muted">Your cart is currently empty.</h4>
+            <a href="/" class="btn btn-primary mt-3">Continue Shopping</a>
+        </div>
+    {% else %}
+        <table class="table table-striped table-hover table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">Thumbnail</th>
+                    <th class="text-start">Title</th>
+                    <th class="text-center">Category</th>
+                    <th class="text-end">Price</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-end">Total</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    <tr>
+                        <td class="text-center">
+                            <img src="{{ item['thumbnail'] }}" alt="{{ item['title'] }}" width="50" class="img-thumbnail border-0 bg-transparent">
+                        </td>
+
+                        <td class="text-start"><strong>{{ item['title'] }}</strong></td>
+
+                        <td class="text-center">
+                            <span class="badge bg-secondary">{{ item['category'] }}</span>
+                        </td>
+
+                        <td class="text-end">${{ "%.2f"|format(item['price']) }}</td>
+
+                        <td class="text-center">{{ item['quantity'] }}</td>
+
+                        <td class="text-end fw-bold">
+                            ${{ "%.2f"|format(item['total']) }}
+                        </td>
+
+                        <td class="text-center">
+                            <form action="/delete" method="POST" class="m-0">
+                                <input type="hidden" name="product_id" value="{{ item['product_id'] }}">
+                                <button class="btn btn-outline-danger btn-sm fw-bold" type="submit" title="Remove">X</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 p-4 bg-light rounded shadow-sm border">
+            <h4 class="mb-0">Grand Total: <span class="text-success fw-bold">${{ "%.2f"|format(grand_total) }}</span></h4>
+
+            <form action="/buy" method="POST" class="m-0">
+                <button class="btn btn-success btn-lg px-5 fw-bold" type="submit">Buy Now</button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
